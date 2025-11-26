@@ -1,9 +1,14 @@
-import { Wallet, Circle, TrendingUp, Users, DollarSign } from 'lucide-react';
+import { Wallet, Circle, Users, DollarSign } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Swap } from './components/Swap';
+import { MyPosition } from './components/MyPosition';
+import { Auction } from './components/Auction';
+import { MyBid } from './components/MyBid';
 
 function App() {
   const [countdown1, setCountdown1] = useState({ hours: 2, minutes: 15, seconds: 34 });
   const [countdown2, setCountdown2] = useState({ hours: 4, minutes: 45, seconds: 22 });
+  const [endAuction, setEndAuction] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -77,159 +82,38 @@ function App() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <Circle className="w-5 h-5 text-cyan-400" />
-                <h2 className="text-xl font-semibold">Twilight Real-Time Auction</h2>
-              </div>
-              <span className="px-3 py-1 bg-green-500 text-xs font-semibold rounded-full uppercase">Live</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="border border-gray-700 rounded-lg p-4 bg-gradient-to-r from-gray-800/50 to-transparent hover:border-cyan-400 transition-colors">
-                <div className="text-sm text-gray-400 mb-2">Current Block</div>
-                <div className="text-2xl font-bold">#12547</div>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-4 bg-gradient-to-r from-gray-800/50 to-transparent hover:border-cyan-400 transition-colors">
-                <div className="text-sm text-gray-400 mb-2">Last Clearing Price</div>
-                <div className="text-2xl font-bold text-cyan-400">$589.42</div>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-4 bg-gradient-to-r from-gray-800/50 to-transparent hover:border-cyan-400 transition-colors">
-                <div className="text-sm text-gray-400 mb-2">Block Ends In</div>
-                <div className="text-2xl font-bold text-cyan-400">{formatTime(countdown1)}</div>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-4 bg-gradient-to-r from-gray-800/50 to-transparent hover:border-cyan-400 transition-colors">
-                <div className="text-sm text-gray-400 mb-2">Auction Ends In</div>
-                <div className="text-2xl font-bold text-cyan-400">{formatTime(countdown2)}</div>
+        <div className="flex items-center gap-3 mb-6">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <span className="text-sm text-gray-400">End Auction</span>
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={endAuction}
+                onChange={(e) => setEndAuction(e.target.checked)}
+                className="sr-only"
+              />
+              <div
+                className={`w-14 h-7 rounded-full transition-colors duration-200 ${
+                  endAuction ? 'bg-cyan-400' : 'bg-gray-700'
+                }`}
+              >
+                <div
+                  className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-200 ${
+                    endAuction ? 'translate-x-7' : 'translate-x-1'
+                  } mt-0.5`}
+                />
               </div>
             </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-6">
-              <TrendingUp className="w-5 h-5 text-cyan-400" />
-              <h2 className="text-xl font-semibold">My Bid</h2>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm text-gray-400 mb-2 block">Budget Allocation</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    placeholder="0.00"
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pl-8 focus:outline-none focus:border-cyan-400 transition-colors"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-sm text-gray-400 mb-2 block">Maximum Price Limit</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    placeholder="0.00"
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pl-8 focus:outline-none focus:border-cyan-400 transition-colors"
-                  />
-                </div>
-              </div>
-
-              <button className="w-full bg-cyan-400 text-black font-semibold py-3 rounded-lg hover:bg-cyan-300 transition-colors">
-                Place Bid
-              </button>
-            </div>
-          </div>
+          </label>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-6">
-              <Circle className="w-5 h-5 text-cyan-400" />
-              <h2 className="text-xl font-semibold">Swap</h2>
-            </div>
-
-            <div className="space-y-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="0.0"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 focus:outline-none focus:border-cyan-400 transition-colors"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-gray-400">
-                  <Circle className="w-4 h-4" />
-                  USDC
-                </span>
-              </div>
-
-              <div className="flex justify-center">
-                <button className="bg-gray-800 p-2 rounded-lg border border-gray-700 hover:border-cyan-400 transition-colors">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="0.0"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 focus:outline-none focus:border-cyan-400 transition-colors"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-gray-400">
-                  <Circle className="w-4 h-4" />
-                  mBTC
-                </span>
-              </div>
-
-              <button className="w-full bg-cyan-400 text-black font-semibold py-3 rounded-lg hover:bg-cyan-300 transition-colors">
-                Connect Wallet to Swap
-              </button>
-
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-700">
-                <div>
-                  <div className="text-sm text-gray-400 mb-1">Pool Depth</div>
-                  <div className="text-sm font-semibold">$8,542,000</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 mb-1">Maximum Price (USD)</div>
-                  <div className="text-sm font-semibold">$87.32</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 mb-1">Slippage</div>
-                  <div className="text-sm font-semibold">0.3%</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 mb-1">24h Volume</div>
-                  <div className="text-sm font-semibold">$1,254,000</div>
-                </div>
-              </div>
-            </div>
+        <div className="grid grid-cols-2 gap-6 items-stretch">
+          <div className="flex flex-col h-full">
+            {endAuction ? <Swap /> : <Auction countdown1={countdown1} countdown2={countdown2} formatTime={formatTime} />}
           </div>
-
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6 h-fit">
-            <div className="flex items-center gap-2 mb-6">
-              <Circle className="w-5 h-5 text-cyan-400" />
-              <h2 className="text-xl font-semibold">My Position</h2>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <div className="text-sm text-gray-400 mb-2">Token Balance</div>
-                <div className="text-3xl font-bold">
-                  <span className="text-cyan-400">25.4</span>
-                  <span className="text-xl text-gray-400 ml-2">mBTC</span>
-                </div>
-              </div>
-
-              <div>
-                <div className="text-sm text-gray-400 mb-2">Average Entry Price</div>
-                <div className="text-2xl font-bold">$562.89</div>
-              </div>
-            </div>
+          <div className="flex flex-col gap-6 h-full">
+            {!endAuction && <MyBid />}
+            <MyPosition />
           </div>
         </div>
       </main>
