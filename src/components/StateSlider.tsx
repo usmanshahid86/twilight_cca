@@ -1,3 +1,5 @@
+import { useThemeClasses } from '../hooks/useThemeClasses';
+
 interface StateSliderProps {
   value: 'pre-auction' | 'auction-live' | 'post-auction';
   onChange: (value: 'pre-auction' | 'auction-live' | 'post-auction') => void;
@@ -11,6 +13,7 @@ const stateLabels = {
 };
 
 export function StateSlider({ value, onChange }: StateSliderProps) {
+  const themeClasses = useThemeClasses();
   const handleClick = (index: number) => {
     onChange(states[index]);
   };
@@ -25,7 +28,7 @@ export function StateSlider({ value, onChange }: StateSliderProps) {
             onClick={() => handleClick(index)}
             className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 ${
               value === state
-                ? 'bg-cyan-400 text-black shadow-lg'
+                ? `${themeClasses.bgAccent} ${themeClasses.textAccentHover} shadow-lg`
                 : 'text-gray-400 hover:text-white'
             }`}
           >

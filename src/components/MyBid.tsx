@@ -1,13 +1,15 @@
-import { TrendingUp } from 'lucide-react';
+import { HandCoins } from 'lucide-react';
 import { useTilt } from '../hooks/useTilt';
+import { useThemeClasses } from '../hooks/useThemeClasses';
 
 export function MyBid() {
+  const themeClasses = useThemeClasses();
   const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
 
   return (
     <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6" style={{ transformStyle: 'preserve-3d' }}>
       <div className="flex items-center gap-2 mb-4 sm:mb-6">
-        <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
+        <HandCoins className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
         <h2 className="text-lg sm:text-xl font-semibold">My Bid</h2>
       </div>
 
@@ -19,7 +21,7 @@ export function MyBid() {
             <input
               type="text"
               placeholder="0.00"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 pl-7 sm:pl-8 text-sm sm:text-base focus:outline-none focus:border-cyan-400 transition-colors"
+              className={`w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 pl-7 sm:pl-8 text-sm sm:text-base focus:outline-none ${themeClasses.focusBorderAccent} transition-colors`}
             />
           </div>
         </div>
@@ -31,12 +33,12 @@ export function MyBid() {
             <input
               type="text"
               placeholder="0.00"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 pl-7 sm:pl-8 text-sm sm:text-base focus:outline-none focus:border-cyan-400 transition-colors"
+              className={`w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 pl-7 sm:pl-8 text-sm sm:text-base focus:outline-none ${themeClasses.focusBorderAccent} transition-colors`}
             />
           </div>
         </div>
 
-        <button className="w-full bg-cyan-400 text-black font-semibold py-2.5 sm:py-3 rounded-lg hover:bg-cyan-300 transition-colors text-sm sm:text-base">
+        <button className={`w-full ${themeClasses.bgAccent} ${themeClasses.textAccentHover} font-semibold py-2.5 sm:py-3 rounded-lg ${themeClasses.hoverBgAccentHover} transition-colors text-sm sm:text-base`}>
           Place Bid
         </button>
       </div>

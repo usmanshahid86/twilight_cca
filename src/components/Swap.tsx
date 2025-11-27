@@ -1,13 +1,15 @@
-import { Circle } from 'lucide-react';
+import { ArrowLeftRight, Circle } from 'lucide-react';
 import { useTilt } from '../hooks/useTilt';
+import { useThemeClasses } from '../hooks/useThemeClasses';
 
 export function Swap() {
+  const themeClasses = useThemeClasses();
   const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
 
   return (
     <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6 h-full" style={{ transformStyle: 'preserve-3d' }}>
       <div className="flex items-center gap-2 mb-4 sm:mb-6">
-        <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
+        <ArrowLeftRight className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
         <h2 className="text-lg sm:text-xl font-semibold">Swap</h2>
       </div>
 
@@ -16,7 +18,7 @@ export function Swap() {
           <input
             type="text"
             placeholder="0.0"
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-3 sm:py-4 text-sm sm:text-base focus:outline-none focus:border-cyan-400 transition-colors"
+            className={`w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-3 sm:py-4 text-sm sm:text-base focus:outline-none ${themeClasses.focusBorderAccent} transition-colors`}
           />
           <span className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-400">
             <Circle className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -25,7 +27,7 @@ export function Swap() {
         </div>
 
         <div className="flex justify-center">
-          <button className="bg-gray-800 p-1.5 sm:p-2 rounded-lg border border-gray-700 hover:border-cyan-400 transition-colors">
+          <button className={`bg-gray-800 p-1.5 sm:p-2 rounded-lg border border-gray-700 ${themeClasses.hoverBorderAccent} transition-colors`}>
             <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
             </svg>
@@ -36,7 +38,7 @@ export function Swap() {
           <input
             type="text"
             placeholder="0.0"
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-3 sm:py-4 text-sm sm:text-base focus:outline-none focus:border-cyan-400 transition-colors"
+            className={`w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-3 sm:py-4 text-sm sm:text-base focus:outline-none ${themeClasses.focusBorderAccent} transition-colors`}
           />
           <span className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-400">
             <Circle className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -44,8 +46,8 @@ export function Swap() {
           </span>
         </div>
 
-        <button className="w-full bg-cyan-400 text-black font-semibold py-2.5 sm:py-3 rounded-lg hover:bg-cyan-300 transition-colors text-sm sm:text-base">
-          Connect Wallet to Swap
+        <button className={`w-full ${themeClasses.bgAccent} ${themeClasses.textAccentHover} font-semibold py-2.5 sm:py-3 rounded-lg ${themeClasses.hoverBgAccentHover} transition-colors text-sm sm:text-base`}>
+          Swap
         </button>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-gray-700">

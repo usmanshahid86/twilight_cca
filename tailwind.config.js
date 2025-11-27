@@ -8,6 +8,7 @@ export default {
       colors: {
         primary: designSystem.colors.primary,
         accent: {
+          red: designSystem.colors.accent.red,
           cyan: designSystem.colors.accent.cyan,
         },
         neutral: {
@@ -72,7 +73,7 @@ export default {
       animation: {
         'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
         'fade-in': 'fade-in 0.6s ease-out forwards',
-        'marquee': 'marquee 15s linear infinite',
+        'marquee': 'marquee 7.5s linear infinite',
       },
       perspective: {
         '1000': '1000px',

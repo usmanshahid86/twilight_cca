@@ -17,6 +17,12 @@
       "950": "#083344"
     },
     "accent": {
+      "red": {
+        "light": "#f87171",
+        "base": "#ef4444",
+        "dark": "#dc2626",
+        "hover": "#f87171"
+      },
       "cyan": {
         "light": "#67e8f9",
         "base": "#22d3ee",
@@ -85,8 +91,8 @@
     "border": {
       "primary": "#374151",
       "secondary": "#1f2937",
-      "accent": "#22d3ee",
-      "hover": "#22d3ee"
+      "accent": "#ef4444",
+      "hover": "#ef4444"
     }
   },
   "typography": {

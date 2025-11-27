@@ -1,4 +1,4 @@
-import { Wallet, Circle, Users, DollarSign } from 'lucide-react';
+import { Wallet, Users, DollarSign } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Swap } from './components/Swap';
 import { MyPosition } from './components/MyPosition';
@@ -9,8 +9,11 @@ import { TiltCard } from './components/TiltCard';
 import { AnnouncementBanner } from './components/AnnouncementBanner';
 import { StateSlider } from './components/StateSlider';
 import { TypewriterText } from './components/TypewriterText';
+import { ThemeToggle } from './components/ThemeToggle';
+import { useThemeClasses } from './hooks/useThemeClasses';
 
 function App() {
+  const themeClasses = useThemeClasses();
   const [countdown1, setCountdown1] = useState({ hours: 2, minutes: 15, seconds: 34 });
   const [countdown2, setCountdown2] = useState({ hours: 4, minutes: 45, seconds: 22 });
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
@@ -59,17 +62,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="border-b border-gray-800 bg-black">
+    <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
+      <header className={`border-b border-gray-800 ${themeClasses.headerBackground}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Circle className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
-            <span className="text-base sm:text-xl font-semibold">TWILIGHT ICO</span>
+            <img src="/assets/twilight-logo.png" alt="Twilight Logo" style={{ minWidth: '108px', height: 'auto' }} />
+            <span className="text-base sm:text-xl font-semibold">ICO</span>
           </div>
           <nav className="flex items-center gap-4 sm:gap-8">
+            <ThemeToggle />
             <a href="#" className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base">How to ICO</a>
             <a href="#" className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base">Twilight Docs</a>
-            <button className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-cyan-400 text-cyan-400 rounded hover:bg-cyan-400 hover:text-black transition-colors text-sm sm:text-base">
+            <button className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border ${themeClasses.borderAccent} ${themeClasses.textAccent} rounded ${themeClasses.hoverBgAccent} ${themeClasses.textAccentHover} transition-colors text-sm sm:text-base`}>
               <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Connect Wallet</span>
               <span className="sm:hidden">Connect</span>
@@ -84,8 +88,14 @@ function App() {
         <div className="text-center mb-8 sm:mb-12">
           <h1 id="title" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 sm:mb-4 font-mono tracking-tight">
             <TypewriterText 
-              text="Twilight Token Auction" 
+              text={[
+                "Twilight Token Auction",
+                "Zero Margin",
+                "Zero Knowledge PnL",
+                "Zero Knowledge Leverage"
+              ]}
               speed={80}
+              delayBetweenTexts={3000}
               onComplete={() => setTitleComplete(true)}
             />
           </h1>
@@ -106,7 +116,7 @@ function App() {
               <TiltCard maxTilt={3} scale={1.01}>
                 <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
                   <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Bids</div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">1,427</div>
+                  <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>1,427</div>
                 </div>
               </TiltCard>
             </AnimatedSection>
@@ -114,7 +124,7 @@ function App() {
               <TiltCard maxTilt={3} scale={1.01}>
                 <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
                   <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Active Bidders</div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">892</div>
+                  <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>892</div>
                 </div>
               </TiltCard>
             </AnimatedSection>
@@ -122,7 +132,7 @@ function App() {
               <TiltCard maxTilt={3} scale={1.01}>
                 <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
                   <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Value Locked</div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">$14,250,000</div>
+                  <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>$14,250,000</div>
                 </div>
             </TiltCard>
           </AnimatedSection>

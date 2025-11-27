@@ -50,7 +50,7 @@ export function DecryptedText({
   return (
     <span className={className}>
       {displayText}
-      {isDecrypting && <span className="animate-pulse text-cyan-400">|</span>}
+      {isDecrypting && <span className="animate-pulse text-red-500">|</span>}
     </span>
   );
 }
