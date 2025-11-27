@@ -23,7 +23,10 @@ export default {
         text: designSystem.colors.text,
         border: designSystem.colors.border,
       },
-      fontFamily: designSystem.typography.fontFamily,
+      fontFamily: {
+        sans: ['Poppins', ...designSystem.typography.fontFamily.sans],
+        mono: ['JetBrains Mono', ...designSystem.typography.fontFamily.mono],
+      },
       fontSize: designSystem.typography.fontSize,
       fontWeight: designSystem.typography.fontWeight,
       letterSpacing: designSystem.typography.letterSpacing,
@@ -38,6 +41,43 @@ export default {
       transitionTimingFunction: designSystem.transitions.easing,
       screens: designSystem.breakpoints,
       zIndex: designSystem.zIndex,
+      keyframes: {
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+        'marquee': {
+          '0%': {
+            transform: 'translateX(100%)',
+          },
+          '100%': {
+            transform: 'translateX(-50%)',
+          },
+        },
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+        'fade-in': 'fade-in 0.6s ease-out forwards',
+        'marquee': 'marquee 15s linear infinite',
+      },
+      perspective: {
+        '1000': '1000px',
+        '2000': '2000px',
+      },
     },
   },
   plugins: [],

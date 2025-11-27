@@ -4,11 +4,27 @@ import { Swap } from './components/Swap';
 import { MyPosition } from './components/MyPosition';
 import { Auction } from './components/Auction';
 import { MyBid } from './components/MyBid';
+import { AnimatedSection } from './components/AnimatedSection';
+import { TiltCard } from './components/TiltCard';
+import { AnnouncementBanner } from './components/AnnouncementBanner';
+import { StateSlider } from './components/StateSlider';
+import { TypewriterText } from './components/TypewriterText';
 
 function App() {
   const [countdown1, setCountdown1] = useState({ hours: 2, minutes: 15, seconds: 34 });
   const [countdown2, setCountdown2] = useState({ hours: 4, minutes: 45, seconds: 22 });
-  const [endAuction, setEndAuction] = useState(false);
+  const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
+  const [titleComplete, setTitleComplete] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    // Start showing content shortly after title starts animating
+    const contentTimer = setTimeout(() => {
+      setShowContent(true);
+    }, 500); // Start after 500ms
+
+    return () => clearTimeout(contentTimer);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -62,60 +78,89 @@ function App() {
         </div>
       </header>
 
+      <AnnouncementBanner state={auctionState} />
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
         <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">Twilight Token Auction</h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400">Privacy Perpetual DEX</p>
+          <h1 id="title" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 sm:mb-4 font-mono tracking-tight">
+            <TypewriterText 
+              text="Twilight Token Auction" 
+              speed={80}
+              onComplete={() => setTitleComplete(true)}
+            />
+          </h1>
+          <p 
+            id="subtitle" 
+            className={`text-base sm:text-lg md:text-xl text-gray-400 transition-all duration-[2000ms] ease-out ${
+              titleComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            Untraceable Bitcoin Privacy DEX
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6">
-            <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Bids</div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">1,427</div>
-          </div>
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6">
-            <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Active Bidders</div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">892</div>
-          </div>
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6">
-            <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Value Locked</div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">$14,250,000</div>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center sm:justify-start gap-3 mb-4 sm:mb-6">
-          <label className="flex items-center gap-2 sm:gap-3 cursor-pointer">
-            <span className="text-xs sm:text-sm text-gray-400">End Auction</span>
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={endAuction}
-                onChange={(e) => setEndAuction(e.target.checked)}
-                className="sr-only"
-              />
-              <div
-                className={`w-14 h-7 rounded-full transition-colors duration-200 ${
-                  endAuction ? 'bg-cyan-400' : 'bg-gray-700'
-                }`}
-              >
-                <div
-                  className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-200 ${
-                    endAuction ? 'translate-x-7' : 'translate-x-1'
-                  } mt-0.5`}
-                />
-              </div>
+        <div className={`transition-opacity duration-1000 ease-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>
+          <AnimatedSection delay={100} animation="fade-in-up">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <AnimatedSection delay={0}>
+              <TiltCard maxTilt={3} scale={1.01}>
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
+                  <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Bids</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">1,427</div>
+                </div>
+              </TiltCard>
+            </AnimatedSection>
+            <AnimatedSection delay={100}>
+              <TiltCard maxTilt={3} scale={1.01}>
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
+                  <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Active Bidders</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">892</div>
+                </div>
+              </TiltCard>
+            </AnimatedSection>
+            <AnimatedSection delay={200}>
+              <TiltCard maxTilt={3} scale={1.01}>
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
+                  <div className="text-xs sm:text-sm text-gray-400 mb-2 uppercase tracking-wide">Total Value Locked</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">$14,250,000</div>
+                </div>
+            </TiltCard>
+          </AnimatedSection>
             </div>
-          </label>
-        </div>
+          </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
-          <div className="flex flex-col h-full">
-            {endAuction ? <Swap /> : <Auction countdown1={countdown1} countdown2={countdown2} formatTime={formatTime} />}
+          <AnimatedSection delay={200} animation="fade-in-up">
+            <div className="flex items-center justify-center sm:justify-start mb-4 sm:mb-6">
+              <StateSlider value={auctionState} onChange={setAuctionState} />
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={300} animation="fade-in-up">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+          <AnimatedSection delay={0} animation="fade-in">
+            <div className="flex flex-col h-full">
+              {auctionState === 'post-auction' ? (
+                <Swap />
+              ) : auctionState === 'auction-live' ? (
+                <Auction countdown1={countdown1} countdown2={countdown2} formatTime={formatTime} />
+              ) : (
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6 h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <h2 className="text-xl sm:text-2xl font-semibold mb-2">Auction Starting Soon</h2>
+                    <p className="text-sm sm:text-base text-gray-400">Get ready to participate in the Twilight Token Auction</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </AnimatedSection>
+          <AnimatedSection delay={150} animation="fade-in">
+            <div className="flex flex-col gap-4 sm:gap-6 h-full">
+              {auctionState === 'auction-live' && <MyBid />}
+              <MyPosition auctionState={auctionState} />
+            </div>
+          </AnimatedSection>
           </div>
-          <div className="flex flex-col gap-4 sm:gap-6 h-full">
-            {!endAuction && <MyBid />}
-            <MyPosition />
-          </div>
+        </AnimatedSection>
         </div>
       </main>
 

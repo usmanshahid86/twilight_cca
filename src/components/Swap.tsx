@@ -1,8 +1,11 @@
 import { Circle } from 'lucide-react';
+import { useTilt } from '../hooks/useTilt';
 
 export function Swap() {
+  const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
+
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6 h-full">
+    <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6 h-full" style={{ transformStyle: 'preserve-3d' }}>
       <div className="flex items-center gap-2 mb-4 sm:mb-6">
         <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
         <h2 className="text-lg sm:text-xl font-semibold">Swap</h2>
