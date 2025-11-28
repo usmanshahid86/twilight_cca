@@ -7,7 +7,7 @@ interface UseTiltOptions {
   transition?: string;
 }
 
-export function useTilt(options: UseTiltOptions = {}) {
+export function useTilt<T extends HTMLElement = HTMLDivElement>(options: UseTiltOptions = {}) {
   const {
     maxTilt = 5,
     perspective = 1000,
@@ -15,7 +15,7 @@ export function useTilt(options: UseTiltOptions = {}) {
     transition = 'transform 0.3s ease-out',
   } = options;
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const element = ref.current;
@@ -70,4 +70,3 @@ export function useTilt(options: UseTiltOptions = {}) {
 
   return ref;
 }
-

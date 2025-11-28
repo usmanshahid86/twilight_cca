@@ -12,9 +12,14 @@ import { StateSlider } from './components/StateSlider';
 import { TypewriterText } from './components/TypewriterText';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useThemeClasses } from './hooks/useThemeClasses';
+import { useTilt } from './hooks/useTilt';
 
 function App() {
   const themeClasses = useThemeClasses();
+  const navThemeToggleTilt = useTilt<HTMLDivElement>({ maxTilt: 3, scale: 1.02 });
+  const navLink1Tilt = useTilt<HTMLAnchorElement>({ maxTilt: 3, scale: 1.02 });
+  const navLink2Tilt = useTilt<HTMLAnchorElement>({ maxTilt: 3, scale: 1.02 });
+  const navButtonTilt = useTilt<HTMLButtonElement>({ maxTilt: 3, scale: 1.02 });
   const [countdown1, setCountdown1] = useState({ hours: 2, minutes: 15, seconds: 34 });
   const [countdown2, setCountdown2] = useState({ hours: 4, minutes: 45, seconds: 22 });
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
@@ -56,6 +61,13 @@ function App() {
     slippage: 0.3,
     volume24h: 1254000,
   });
+  
+  // My Bid data - to be fetched from data source
+  const [myBidData, _setMyBidData] = useState<Array<{ id: string; budget: number; maxPrice: number }>>([
+    // Example bids - remove when connecting to real data source
+    // { id: '1', budget: 5000, maxPrice: 600 },
+    // { id: '2', budget: 3000, maxPrice: 550 },
+  ]);
   
   
   // TODO: Fetch data from API/data source
@@ -134,10 +146,12 @@ function App() {
             <span className="text-base sm:text-xl font-semibold">ICO</span>
           </div>
           <nav className="flex items-center gap-4 sm:gap-8">
-            <ThemeToggle />
-            <a href="#" className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base">How to ICO</a>
-            <a href="#" className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base">Twilight Docs</a>
-            <button className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border ${themeClasses.borderAccent} ${themeClasses.textAccent} rounded ${themeClasses.hoverBgAccent} ${themeClasses.textAccentHover} transition-colors text-sm sm:text-base`}>
+            <div ref={navThemeToggleTilt} style={{ transformStyle: 'preserve-3d' }}>
+              <ThemeToggle />
+            </div>
+            <a href="#" ref={navLink1Tilt} className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>How to ICO</a>
+            <a href="#" ref={navLink2Tilt} className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>Twilight Docs</a>
+            <button ref={navButtonTilt} className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border ${themeClasses.borderAccent} ${themeClasses.textAccent} rounded ${themeClasses.hoverBgAccent} ${themeClasses.textAccentHover} transition-colors text-sm sm:text-base`} style={{ transformStyle: 'preserve-3d' }}>
               <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Connect Wallet</span>
               <span className="sm:hidden">Connect</span>
@@ -179,7 +193,7 @@ function App() {
               <div className="flex justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
                 <div className="w-1/3">
                   <AnimatedSection delay={0}>
-                    <TiltCard maxTilt={3} scale={1.01}>
+                    <TiltCard maxTilt={5} scale={1.02}>
                       <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
                         <div className="flex items-center gap-2 mb-2">
                           <Coins className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
@@ -195,7 +209,7 @@ function App() {
                 </div>
                 <div className="w-1/3">
                   <AnimatedSection delay={100}>
-                    <TiltCard maxTilt={3} scale={1.01}>
+                    <TiltCard maxTilt={5} scale={1.02}>
                       <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
                         <div className="flex items-center gap-2 mb-2">
                           <Clock className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
@@ -310,7 +324,11 @@ function App() {
           </AnimatedSection>
           <AnimatedSection delay={150} animation="fade-in">
             <div className="flex flex-col gap-4 sm:gap-6 h-full">
-              {auctionState === 'auction-live' && <MyBid />}
+              {auctionState === 'auction-live' && (
+                <MyBid 
+                  activeBids={myBidData}
+                />
+              )}
                     <MyPosition 
                       auctionState={auctionState}
                       tokenBalance={myPositionData.tokenBalance}

@@ -26,12 +26,12 @@ export function Auction({
   allocatedPercentage = 50,
 }: AuctionProps) {
   const themeClasses = useThemeClasses();
-  const containerTilt = useTilt({ maxTilt: 2, scale: 1.01 });
-  const block1Tilt = useTilt({ maxTilt: 4, scale: 1.02 });
-  const block2Tilt = useTilt({ maxTilt: 4, scale: 1.02 });
-  const block3Tilt = useTilt({ maxTilt: 4, scale: 1.02 });
-  const block4Tilt = useTilt({ maxTilt: 4, scale: 1.02 });
-  const block5Tilt = useTilt({ maxTilt: 4, scale: 1.02 });
+  const containerTilt = useTilt({ maxTilt: 5, scale: 1.02 });
+  const block1Tilt = useTilt({ maxTilt: 6, scale: 1.03 });
+  const block2Tilt = useTilt({ maxTilt: 6, scale: 1.03 });
+  const block3Tilt = useTilt({ maxTilt: 6, scale: 1.03 });
+  const block4Tilt = useTilt({ maxTilt: 6, scale: 1.03 });
+  const block5Tilt = useTilt({ maxTilt: 6, scale: 1.03 });
 
   return (
     <div ref={containerTilt} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-3 sm:p-4 md:p-5 h-full flex flex-col" style={{ transformStyle: 'preserve-3d' }}>

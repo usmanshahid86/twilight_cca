@@ -16,7 +16,7 @@ export function Swap({
   volume24h = 1254000,
 }: SwapProps) {
   const themeClasses = useThemeClasses();
-  const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
+  const tiltRef = useTilt({ maxTilt: 5, scale: 1.02 });
 
   return (
     <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6 h-full" style={{ transformStyle: 'preserve-3d' }}>
