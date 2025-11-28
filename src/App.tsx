@@ -13,6 +13,8 @@ import { AnnouncementBanner } from './components/AnnouncementBanner';
 import { StateSlider } from './components/StateSlider';
 import { TypewriterText } from './components/TypewriterText';
 import { ThemeToggle } from './components/ThemeToggle';
+import { LightningBackground } from './components/LightningBackground';
+import ElectricBorder from './components/ElectricBorder';
 import { useThemeClasses } from './hooks/useThemeClasses';
 import { useTilt } from './hooks/useTilt';
 
@@ -25,6 +27,8 @@ function App() {
   const [countdown1, setCountdown1] = useState({ hours: 2, minutes: 15, seconds: 34 });
   const [countdown2, setCountdown2] = useState({ hours: 4, minutes: 45, seconds: 22 });
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
+  const [auctionStartDate] = useState(new Date('2025-12-23T00:00:00'));
+  const [timeUntilAuction, setTimeUntilAuction] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [titleComplete, setTitleComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [currentPage, setCurrentPage] = useState<'home' | 'faq'>(() => {
@@ -148,6 +152,33 @@ function App() {
     return () => clearInterval(timer);
   }, [auctionState]);
 
+  // Countdown to auction start date
+  useEffect(() => {
+    if (auctionState !== 'pre-auction') return;
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = auctionStartDate.getTime() - now;
+
+      if (distance < 0) {
+        setTimeUntilAuction({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setTimeUntilAuction({ days, hours, minutes, seconds });
+    };
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(timer);
+  }, [auctionState, auctionStartDate]);
+
   // Simulate new transactions - increment values periodically
   useEffect(() => {
     if (auctionState !== 'auction-live') return;
@@ -170,7 +201,11 @@ function App() {
 
   return (
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
-      <header className={`border-b border-gray-800 ${themeClasses.headerBackground}`}>
+      {/* Lightning Background Container for Header and Hero */}
+      <div className="relative">
+        <LightningBackground />
+        
+      <header className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <a 
             href="/" 
@@ -211,12 +246,8 @@ function App() {
 
       <AnnouncementBanner state={auctionState} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
-        {currentPage === 'faq' ? (
-          <FAQ />
-        ) : (
-          <>
-        <div className="mb-8 sm:mb-12 overflow-visible pt-0">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+        <div className="mb-8 sm:mb-12 overflow-visible pt-0 relative z-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 overflow-visible pt-0">
             {/* Title Container */}
             <div className="text-center sm:text-left flex flex-col justify-center pt-0">
@@ -344,7 +375,17 @@ function App() {
               </div>
             )}
           </AnimatedSection>
+        </div>
+      </div>
+      </div>
+      {/* End of Lightning Background Container */}
 
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+        {currentPage === 'faq' ? (
+          <FAQ />
+        ) : (
+          <>
+        <div className={`transition-opacity duration-1000 ease-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>
           <AnimatedSection delay={200} animation="fade-in-up">
             <div className="flex items-center justify-center sm:justify-start mb-4 sm:mb-6">
               <StateSlider value={auctionState} onChange={setAuctionState} />
@@ -375,13 +416,49 @@ function App() {
                         allocatedPercentage={auctionData.allocatedPercentage}
                       />
                     ) : (
-                      <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6 h-full flex items-center justify-center">
-                        <div className="text-center">
-                          <h2 className="text-xl sm:text-2xl font-semibold mb-2">Auction Starting Soon</h2>
-                          <p className="text-sm sm:text-base text-gray-400 mb-2">Get ready to participate in the Twilight Token Auction</p>
-                          <p className={`text-sm sm:text-base ${themeClasses.textAccent} font-medium`}>December 23, 2005</p>
+                      <ElectricBorder color="#7df9ff" speed={0.75} chaos={0.375} thickness={1.5} className="h-full" style={{ borderRadius: '16px' }}>
+                        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg p-6 h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <h2 className="text-xl sm:text-2xl font-semibold mb-4">Auction Starting Soon</h2>
+                            
+                            {/* Countdown Timer */}
+                            <div className="flex justify-center gap-2 sm:gap-4 mb-4">
+                              <div className="flex flex-col items-center">
+                                <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>
+                                  {String(timeUntilAuction.days).padStart(2, '0')}
+                                </div>
+                                <div className="text-xs sm:text-sm text-gray-500 uppercase">Days</div>
+                              </div>
+                              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600">:</div>
+                              <div className="flex flex-col items-center">
+                                <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>
+                                  {String(timeUntilAuction.hours).padStart(2, '0')}
+                                </div>
+                                <div className="text-xs sm:text-sm text-gray-500 uppercase">Hours</div>
+                              </div>
+                              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600">:</div>
+                              <div className="flex flex-col items-center">
+                                <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>
+                                  {String(timeUntilAuction.minutes).padStart(2, '0')}
+                                </div>
+                                <div className="text-xs sm:text-sm text-gray-500 uppercase">Mins</div>
+                              </div>
+                              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600">:</div>
+                              <div className="flex flex-col items-center">
+                                <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>
+                                  {String(timeUntilAuction.seconds).padStart(2, '0')}
+                                </div>
+                                <div className="text-xs sm:text-sm text-gray-500 uppercase">Secs</div>
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm sm:text-base text-gray-400 mb-2">Get ready to participate in the Twilight Token Auction</p>
+                            <p className={`text-sm sm:text-base ${themeClasses.textAccent} font-medium`}>
+                              {auctionStartDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </ElectricBorder>
                     )}
             </div>
           </AnimatedSection>
