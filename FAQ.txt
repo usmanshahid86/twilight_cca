@@ -1,0 +1,70 @@
+Twilight Token Continuous Clearing Auction (CCA)
+
+What is a continuous clearing auction?
+
+ It is an auction format where bids and asks are matched continuously, block by block, allowing real-time price discovery and gradual token distribution instead of discrete, single-round events.
+
+How does the auction work?
+
+ The auction runs over a defined period divided into blocks. Bids specify maximum price and quantity, and each new block recalculates a uniform clearing price where supply equals demand at that moment. Tokens allocated per block are sold at this clearing price, and bids fill only if their price limit meets or exceeds the clearing price.
+
+How is the clearing price for each block determined?
+
+ At each block, the system aggregates all outstanding bids and available token supply for the block timeframe, finds the price where cumulative demand equals fixed supply, and sets that as the clearing price. All accepted bids pay this uniform clearing price.
+
+How can bidders be sure to receive token allocation?
+
+ Bidders receive allocations proportional to their bid quantity at or above the clearing price of each block. Tokens are distributed throughout the auction incrementally. Specifying a competitive maximum price increases the chance of full or partial allocation.
+
+What is the Fully Diluted Value (FDV) of the token at the floor price?
+
+ $50M, compared to $7.55B market cap for ZCash (ZEC) and $7.49B for Monero (XMR). 
+
+Where can I participate or see the auction?
+
+ The auction interface and full details are at https://twilight-token-auction.vercel.app/, allowing real-time bid submissions and updates as well as swapping of the token after the auction.
+
+
+
+Twilight
+
+What is Twilight?
+
+ Twilight is a decentralized exchange (DEX) focused on Bitcoin perpetual futures trading with strong privacy features. Unlike regular Bitcoin trading platforms, Twilight offers untraceable Bitcoin positions, enabling traders to open long or short levered positions while keeping trade and profit & loss (PnL) data private.
+
+What is the progress with the protocol?
+
+Twilight's code is open source, with a public testnet launch planned for December 2025 and mainnet targeted for Q1 2026. The platform supports fast client-side proof generation and high transaction throughput up to 1,000 tx/s.
+
+Who is behind Twilight?
+
+ Twilight is built by a group of Bitcoinist hackers who believe in the idea that all monetary transactions should be a very personal and private matter. Twilight has raised $6 million from notable investors including Blockchain Capital, Castle Island Ventures, Lemniscap, Digital Currency Group, Wintermute, and angels like Naval Ravikant and Meltem Demirors. The development team includes experts in privacy tech, with advisors experienced in privacy coins and Zcash ecosystem.
+
+
+
+Untraceable Bitcoin
+
+Why is privacy important for Bitcoin trading?
+
+ Bitcoin's blockchain is transparent and traceable, which compromises trader privacy. Twilight addresses this by using advanced cryptographic techniques like QuisQuis-based keys, rotating Bitcoin vaults ("boomerang"), and zero-knowledge proofs (zkOS with bulletproofs). This allows trading activity inside the pool to remain untraceable even though bitcoins flow through traceable addresses.
+
+How does Twilight ensure Bitcoin positions remain untraceable?
+
+ Twilight uses rotating Bitcoin vaults (boomerang) and QuisQuis-based keys to shuffle addresses with every trade. Zero-knowledge proofs (zkOS + bulletproofs) verify transactions without revealing user data. This design keeps trade execution and PnL private even inside a decentralized exchange environment.
+
+Can I lend my Bitcoins on Twilight?
+
+ Yes, users who hold untraceable Bitcoin in the pool can lend them to earn trading fees. This creates a two-sided market where traders get private leverage and lenders receive yields in Bitcoin.
+
+What differentiates Twilight from traditional limit order books?
+
+ Twilight operates as a Bitcoin-only pool with private perpetual futures trading. Traders open encrypted long or short positions against the spot-priced pool with zero-cost leverage, rather than posting individual limit orders publicly.
+
+Why not create a new private cryptocurrency instead?
+
+ Twilight focuses on Bitcoin itself because Bitcoin is the largest traded derivatives asset and crucial collateral in stablecoins. Providing privacy for Bitcoin perpetuals addresses a significant market need that privacy coins or forks do not.
+
+What technology powers Twilight?
+
+ The stack includes QuisQuis cryptography for privacy without trusted setup, rotating Bitcoin vaults, zkOS for zero-knowledge proofs, and client-side proof generation optimized for speed (30ms) and throughput (up to 1,000 tx/s).
+

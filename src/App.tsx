@@ -5,6 +5,7 @@ import { Swap } from './components/Swap';
 import { MyPosition } from './components/MyPosition';
 import { Auction } from './components/Auction';
 import { MyBid } from './components/MyBid';
+import { FAQ } from './components/FAQ';
 import { AnimatedSection } from './components/AnimatedSection';
 import { TiltCard } from './components/TiltCard';
 import { AnnouncementBanner } from './components/AnnouncementBanner';
@@ -25,6 +26,11 @@ function App() {
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
   const [titleComplete, setTitleComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'faq'>(() => {
+    // Initialize from URL
+    const path = window.location.pathname;
+    return path === '/faq' || path === '/how-to-ico' ? 'faq' : 'home';
+  });
   
   // Summary section data - to be fetched from data source
   const [summaryData, _setSummaryData] = useState({
@@ -79,6 +85,27 @@ function App() {
   //     fetchSwapData().then(data => _setSwapData(data)),
   //   ]);
   // }, []);
+
+  // Handle browser navigation (back/forward buttons)
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      setCurrentPage(path === '/faq' || path === '/how-to-ico' ? 'faq' : 'home');
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update URL when page changes
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPage === 'faq' && currentPath !== '/faq' && currentPath !== '/how-to-ico') {
+      window.history.pushState({ page: 'faq' }, '', '/faq');
+    } else if (currentPage === 'home' && (currentPath === '/faq' || currentPath === '/how-to-ico')) {
+      window.history.pushState({ page: 'home' }, '', '/');
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     // Start showing content shortly after title starts animating
@@ -141,15 +168,33 @@ function App() {
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
       <header className={`border-b border-gray-800 ${themeClasses.headerBackground}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <a 
+            href="/" 
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+            }}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
             <img src="/assets/twilight-logo.png" alt="Twilight Logo" style={{ minWidth: '108px', height: 'auto' }} />
             <span className="text-base sm:text-xl font-semibold">ICO</span>
-          </div>
+          </a>
           <nav className="flex items-center gap-4 sm:gap-8">
             <div ref={navThemeToggleTilt} style={{ transformStyle: 'preserve-3d' }}>
               <ThemeToggle />
             </div>
-            <a href="#" ref={navLink1Tilt} className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>How to ICO</a>
+            <a 
+              href="/faq" 
+              ref={navLink1Tilt} 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage(currentPage === 'faq' ? 'home' : 'faq');
+              }}
+              className={`hidden sm:block transition-colors text-sm sm:text-base ${currentPage === 'faq' ? themeClasses.textAccent : 'text-gray-300 hover:text-white'}`}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              How to ICO
+            </a>
             <a href="#" ref={navLink2Tilt} className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>Twilight Docs</a>
             <button ref={navButtonTilt} className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border ${themeClasses.borderAccent} ${themeClasses.textAccent} rounded ${themeClasses.hoverBgAccent} ${themeClasses.textAccentHover} transition-colors text-sm sm:text-base`} style={{ transformStyle: 'preserve-3d' }}>
               <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -163,6 +208,10 @@ function App() {
       <AnnouncementBanner state={auctionState} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+        {currentPage === 'faq' ? (
+          <FAQ />
+        ) : (
+          <>
         <div className="text-center mb-8 sm:mb-12">
           <h1 id="title" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 sm:mb-4 font-mono tracking-tight">
             <TypewriterText 
@@ -340,6 +389,8 @@ function App() {
           </div>
         </AnimatedSection>
         </div>
+          </>
+        )}
       </main>
 
       <footer className="border-t border-gray-800 mt-8 sm:mt-12 py-4 sm:py-6 bg-black">
