@@ -2,7 +2,19 @@ import { ArrowLeftRight, Circle } from 'lucide-react';
 import { useTilt } from '../hooks/useTilt';
 import { useThemeClasses } from '../hooks/useThemeClasses';
 
-export function Swap() {
+interface SwapProps {
+  poolDepth?: number;
+  maximumPrice?: number;
+  slippage?: number;
+  volume24h?: number;
+}
+
+export function Swap({
+  poolDepth = 8542000,
+  maximumPrice = 87.32,
+  slippage = 0.3,
+  volume24h = 1254000,
+}: SwapProps) {
   const themeClasses = useThemeClasses();
   const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
 
@@ -53,19 +65,19 @@ export function Swap() {
         <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-gray-700">
           <div>
             <div className="text-xs sm:text-sm text-gray-400 mb-1">Pool Depth</div>
-            <div className="text-xs sm:text-sm font-semibold">$8,542,000</div>
+            <div className="text-xs sm:text-sm font-semibold">${poolDepth.toLocaleString()}</div>
           </div>
           <div>
             <div className="text-xs sm:text-sm text-gray-400 mb-1">Maximum Price (USD)</div>
-            <div className="text-xs sm:text-sm font-semibold">$87.32</div>
+            <div className="text-xs sm:text-sm font-semibold">${maximumPrice.toFixed(2)}</div>
           </div>
           <div>
             <div className="text-xs sm:text-sm text-gray-400 mb-1">Slippage</div>
-            <div className="text-xs sm:text-sm font-semibold">0.3%</div>
+            <div className="text-xs sm:text-sm font-semibold">{slippage}%</div>
           </div>
           <div>
             <div className="text-xs sm:text-sm text-gray-400 mb-1">24h Volume</div>
-            <div className="text-xs sm:text-sm font-semibold">$1,254,000</div>
+            <div className="text-xs sm:text-sm font-semibold">${volume24h.toLocaleString()}</div>
           </div>
         </div>
       </div>

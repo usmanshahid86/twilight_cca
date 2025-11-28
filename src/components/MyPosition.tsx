@@ -4,9 +4,17 @@ import { useThemeClasses } from '../hooks/useThemeClasses';
 
 interface MyPositionProps {
   auctionState?: 'pre-auction' | 'auction-live' | 'post-auction';
+  tokenBalance?: number;
+  averageEntryPrice?: number;
+  estimatedValue?: number;
 }
 
-export function MyPosition({ auctionState }: MyPositionProps) {
+export function MyPosition({ 
+  auctionState, 
+  tokenBalance = 25.4, 
+  averageEntryPrice = 562.89, 
+  estimatedValue = 14297.41 
+}: MyPositionProps) {
   const themeClasses = useThemeClasses();
   const tiltRef = useTilt({ maxTilt: 2, scale: 1.01 });
 
@@ -25,7 +33,7 @@ export function MyPosition({ auctionState }: MyPositionProps) {
               <span className="text-gray-500">—</span>
             ) : (
               <>
-                <span className={themeClasses.textAccent}>25.4</span>
+                <span className={themeClasses.textAccent}>{tokenBalance}</span>
                 <span className="text-base sm:text-lg text-gray-400 ml-1 sm:ml-2">mBTC</span>
               </>
             )}
@@ -38,7 +46,7 @@ export function MyPosition({ auctionState }: MyPositionProps) {
             {auctionState === 'pre-auction' ? (
               <span className="text-gray-500">—</span>
             ) : (
-              <span>$562.89</span>
+              <span>${averageEntryPrice.toFixed(2)}</span>
             )}
           </div>
         </div>
@@ -49,7 +57,7 @@ export function MyPosition({ auctionState }: MyPositionProps) {
             {auctionState === 'pre-auction' ? (
               <span className="text-gray-500">—</span>
             ) : (
-              <span className={themeClasses.textAccent}>$14,297.41</span>
+              <span className={themeClasses.textAccent}>${estimatedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             )}
           </div>
         </div>

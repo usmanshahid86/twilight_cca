@@ -19,6 +19,51 @@ function App() {
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
   const [titleComplete, setTitleComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  
+  // Summary section data - to be fetched from data source
+  const [summaryData, _setSummaryData] = useState({
+    tokensAvailable: '5M',
+    tokensAvailablePercentage: '5%',
+    auctionLengthBlocks: 5,
+    totalBids: 1427,
+    activeBidders: 892,
+    totalValueLocked: 14250000,
+  });
+  
+  // My Position data - to be fetched from data source
+  const [myPositionData, _setMyPositionData] = useState({
+    tokenBalance: 25.4,
+    averageEntryPrice: 562.89,
+    estimatedValue: 14297.41,
+  });
+  
+  // Auction data - to be fetched from data source
+  const [auctionData, _setAuctionData] = useState({
+    currentBlock: 12547,
+    totalBlocks: 12600,
+    lastClearingPrice: 589.42,
+    allocatedTokens: 2500000,
+    totalTokens: 5000000,
+    allocatedPercentage: 50,
+  });
+  
+  // Swap data - to be fetched from data source
+  const [swapData, _setSwapData] = useState({
+    poolDepth: 8542000,
+    maximumPrice: 87.32,
+    slippage: 0.3,
+    volume24h: 1254000,
+  });
+  
+  // TODO: Fetch data from API/data source
+  // useEffect(() => {
+  //   Promise.all([
+  //     fetchSummaryData().then(data => _setSummaryData(data)),
+  //     fetchMyPositionData().then(data => _setMyPositionData(data)),
+  //     fetchAuctionData().then(data => _setAuctionData(data)),
+  //     fetchSwapData().then(data => _setSwapData(data)),
+  //   ]);
+  // }, []);
 
   useEffect(() => {
     // Start showing content shortly after title starts animating
@@ -122,8 +167,8 @@ function App() {
                           <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Tokens Available</div>
                         </div>
                         <div className="flex items-baseline gap-2">
-                          <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>5M</div>
-                          <div className="text-xs sm:text-sm text-gray-500">5% of total supply</div>
+                          <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>{summaryData.tokensAvailable}</div>
+                          <div className="text-xs sm:text-sm text-gray-500">{summaryData.tokensAvailablePercentage} of total supply</div>
                         </div>
                       </div>
                     </TiltCard>
@@ -137,7 +182,7 @@ function App() {
                           <Clock className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
                           <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Auction Length</div>
                         </div>
-                        <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>5 blocks</div>
+                        <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>{summaryData.auctionLengthBlocks} blocks</div>
                       </div>
                     </TiltCard>
                   </AnimatedSection>
@@ -152,7 +197,7 @@ function App() {
                         <HandCoins className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
                         <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Bids</div>
                       </div>
-                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>1,427</div>
+                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>{summaryData.totalBids.toLocaleString()}</div>
                     </div>
                   </TiltCard>
                 </AnimatedSection>
@@ -163,7 +208,7 @@ function App() {
                         <UserCheck className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
                         <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Active Bidders</div>
                       </div>
-                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>892</div>
+                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>{summaryData.activeBidders.toLocaleString()}</div>
                     </div>
                   </TiltCard>
                 </AnimatedSection>
@@ -174,7 +219,7 @@ function App() {
                         <Lock className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
                         <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Total Value Locked</div>
                       </div>
-                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>$14,250,000</div>
+                      <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>${summaryData.totalValueLocked.toLocaleString()}</div>
                     </div>
                   </TiltCard>
                 </AnimatedSection>
@@ -193,9 +238,24 @@ function App() {
           <AnimatedSection delay={0} animation="fade-in">
             <div className="flex flex-col h-full">
               {auctionState === 'post-auction' ? (
-                <Swap />
+                <Swap 
+                  poolDepth={swapData.poolDepth}
+                  maximumPrice={swapData.maximumPrice}
+                  slippage={swapData.slippage}
+                  volume24h={swapData.volume24h}
+                />
                     ) : auctionState === 'auction-live' ? (
-                      <Auction countdown1={countdown1} countdown2={countdown2} formatTime={formatTime} />
+                      <Auction 
+                        countdown1={countdown1} 
+                        countdown2={countdown2} 
+                        formatTime={formatTime}
+                        currentBlock={auctionData.currentBlock}
+                        totalBlocks={auctionData.totalBlocks}
+                        lastClearingPrice={auctionData.lastClearingPrice}
+                        allocatedTokens={auctionData.allocatedTokens}
+                        totalTokens={auctionData.totalTokens}
+                        allocatedPercentage={auctionData.allocatedPercentage}
+                      />
                     ) : (
                       <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-6 h-full flex items-center justify-center">
                         <div className="text-center">
@@ -210,7 +270,12 @@ function App() {
           <AnimatedSection delay={150} animation="fade-in">
             <div className="flex flex-col gap-4 sm:gap-6 h-full">
               {auctionState === 'auction-live' && <MyBid />}
-              <MyPosition auctionState={auctionState} />
+                    <MyPosition 
+                      auctionState={auctionState}
+                      tokenBalance={myPositionData.tokenBalance}
+                      averageEntryPrice={myPositionData.averageEntryPrice}
+                      estimatedValue={myPositionData.estimatedValue}
+                    />
             </div>
           </AnimatedSection>
           </div>
