@@ -25,7 +25,8 @@ function App() {
   const [summaryData, _setSummaryData] = useState({
     tokensAvailable: '5M',
     tokensAvailablePercentage: '5%',
-    auctionLengthBlocks: 5,
+    auctionLengthBlocks: 10000,
+    epochs: '5 epochs',
     totalBids: 1427,
     activeBidders: 892,
     totalValueLocked: 14250000,
@@ -40,8 +41,8 @@ function App() {
   
   // Auction data - to be fetched from data source
   const [auctionData, _setAuctionData] = useState({
-    currentBlock: 12547,
-    totalBlocks: 12600,
+    currentBlock: 4533,
+    totalBlocks: 10000,
     lastClearingPrice: 589.42,
     allocatedTokens: 2500000,
     totalTokens: 5000000,
@@ -200,7 +201,10 @@ function App() {
                           <Clock className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
                           <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide">Auction Length</div>
                         </div>
-                        <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>{summaryData.auctionLengthBlocks} blocks</div>
+                        <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${themeClasses.textAccent}`}>
+                          {summaryData.auctionLengthBlocks.toLocaleString()} blocks{' '}
+                          <span className="text-xs sm:text-sm text-gray-500">{summaryData.epochs}</span>
+                        </div>
                       </div>
                     </TiltCard>
                   </AnimatedSection>
