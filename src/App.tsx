@@ -1,11 +1,12 @@
 import { Wallet, Users, DollarSign, HandCoins, UserCheck, Lock, Coins, Clock } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatedNumber } from './components/AnimatedNumber';
 import { Swap } from './components/Swap';
 import { MyPosition } from './components/MyPosition';
 import { Auction } from './components/Auction';
 import { MyBid } from './components/MyBid';
 import { FAQ } from './components/FAQ';
+import { BitcoinShield } from './components/BitcoinShield';
 import { AnimatedSection } from './components/AnimatedSection';
 import { TiltCard } from './components/TiltCard';
 import { AnnouncementBanner } from './components/AnnouncementBanner';
@@ -117,6 +118,9 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Only run countdown if in auction-live state
+    if (auctionState !== 'auction-live') return;
+
     const timer = setInterval(() => {
       setCountdown1(prev => {
         if (prev.seconds > 0) {
@@ -142,11 +146,11 @@ function App() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [auctionState]);
 
   // Simulate new transactions - increment values periodically
   useEffect(() => {
-    if (auctionState === 'pre-auction') return;
+    if (auctionState !== 'auction-live') return;
     
     const transactionInterval = setInterval(() => {
       _setSummaryData(prev => ({
@@ -155,14 +159,14 @@ function App() {
         activeBidders: prev.activeBidders + (Math.random() > 0.7 ? 1 : 0), // Occasionally increment
         totalValueLocked: prev.totalValueLocked + Math.floor(Math.random() * 50000) + 10000, // Increment by 10k-60k
       }));
-    }, 3000); // Update every 3 seconds
+    }, 5000); // Update every 5 seconds (reduced frequency)
 
     return () => clearInterval(transactionInterval);
   }, [auctionState]);
 
-  const formatTime = (time: { hours: number; minutes: number; seconds: number }) => {
+  const formatTime = useCallback((time: { hours: number; minutes: number; seconds: number }) => {
     return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
-  };
+  }, []);
 
   return (
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
@@ -212,28 +216,38 @@ function App() {
           <FAQ />
         ) : (
           <>
-        <div className="text-center mb-8 sm:mb-12">
-          <h1 id="title" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 sm:mb-4 font-mono tracking-tight">
-            <TypewriterText 
-              text={[
-                "Twilight Token Auction",
-                "Zero Margin",
-                "Zero Knowledge PnL",
-                "Zero Knowledge Leverage"
-              ]}
-              speed={80}
-              delayBetweenTexts={3000}
-              onComplete={() => setTitleComplete(true)}
-            />
-          </h1>
-          <p 
-            id="subtitle" 
-            className={`text-base sm:text-lg md:text-xl text-gray-400 transition-all duration-[2000ms] ease-out ${
-              titleComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
-                  Untraceable Bitcoin on a Privacy DEX
-          </p>
+        <div className="mb-8 sm:mb-12 overflow-visible pt-0">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 overflow-visible pt-0">
+            {/* Title Container */}
+            <div className="text-center sm:text-left flex flex-col justify-center pt-0">
+              <h1 id="title" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 font-mono tracking-tight whitespace-nowrap pt-0 mt-0">
+                <TypewriterText 
+                  text={[
+                    "Twilight Token Auction",
+                    "Zero Margin",
+                    "Private Leverage",
+                    "Private PnL"
+                  ]}
+                  speed={80}
+                  delayBetweenTexts={3000}
+                  onComplete={() => setTitleComplete(true)}
+                />
+              </h1>
+              <p 
+                id="subtitle" 
+                className={`text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 transition-all duration-[2000ms] ease-out ${
+                  titleComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+              >
+                Untraceable Bitcoin on a Privacy DEX
+              </p>
+            </div>
+            <div className="flex-shrink-0 overflow-visible mt-4 sm:mt-6">
+              <AnimatedSection delay={0} animation="fade-in-up">
+                <BitcoinShield className="h-[196px] sm:h-[224px] md:h-[252px] lg:h-[280px]" />
+              </AnimatedSection>
+            </div>
+          </div>
         </div>
 
         <div className={`transition-opacity duration-1000 ease-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>

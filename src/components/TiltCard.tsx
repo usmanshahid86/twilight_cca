@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import { useTilt } from '../hooks/useTilt';
 
 interface TiltCardProps {
@@ -8,7 +8,7 @@ interface TiltCardProps {
   scale?: number;
 }
 
-export function TiltCard({ 
+export const TiltCard = memo(function TiltCard({ 
   children, 
   className = '',
   maxTilt = 5,
@@ -25,5 +25,5 @@ export function TiltCard({
       {children}
     </div>
   );
-}
+});
 

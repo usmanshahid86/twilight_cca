@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { useThemeClasses } from '../hooks/useThemeClasses';
 
 interface TypewriterTextProps {
@@ -9,7 +9,7 @@ interface TypewriterTextProps {
   onComplete?: () => void;
 }
 
-export function TypewriterText({ 
+export const TypewriterText = memo(function TypewriterText({ 
   text, 
   className = '',
   speed = 100,
@@ -85,5 +85,5 @@ export function TypewriterText({
       {isTyping && <span className={`animate-pulse ${themeClasses.textAccent}`}>|</span>}
     </span>
   );
-}
+});
 

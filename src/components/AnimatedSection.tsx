@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface AnimatedSectionProps {
@@ -8,7 +8,7 @@ interface AnimatedSectionProps {
   animation?: 'fade-in-up' | 'fade-in';
 }
 
-export function AnimatedSection({ 
+export const AnimatedSection = memo(function AnimatedSection({ 
   children, 
   delay = 0, 
   className = '',
@@ -21,11 +21,11 @@ export function AnimatedSection({
   return (
     <div
       ref={ref}
-      className={`${className} ${isVisible ? animationClass : 'opacity-0'}`}
+      className={`overflow-visible ${className} ${isVisible ? animationClass : 'opacity-0'}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}
     </div>
   );
-}
+});
 

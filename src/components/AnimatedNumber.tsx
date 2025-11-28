@@ -1,5 +1,5 @@
 import { useAnimatedNumber } from '../hooks/useAnimatedNumber';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, memo, useMemo } from 'react';
 
 interface AnimatedNumberProps {
   value: number;
@@ -8,7 +8,7 @@ interface AnimatedNumberProps {
   formatter?: (value: number) => string;
 }
 
-export function AnimatedNumber({ 
+export const AnimatedNumber = memo(function AnimatedNumber({ 
   value, 
   duration = 2000, 
   enabled = true,
@@ -80,5 +80,5 @@ export function AnimatedNumber({
       {suffix}
     </span>
   );
-}
+});
 
