@@ -1,4 +1,4 @@
-import { Wallet, Users, DollarSign, HandCoins, UserCheck, Lock, Coins, Clock } from 'lucide-react';
+import { Wallet, Users, DollarSign, HandCoins, UserCheck, Lock, Coins, Clock, Menu, X } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatedNumber } from './components/AnimatedNumber';
 import { Swap } from './components/Swap';
@@ -29,6 +29,7 @@ function App() {
   const [auctionState, setAuctionState] = useState<'pre-auction' | 'auction-live' | 'post-auction'>('auction-live');
   const [auctionStartDate] = useState(new Date('2025-12-23T00:00:00'));
   const [timeUntilAuction, setTimeUntilAuction] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [titleComplete, setTitleComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [currentPage, setCurrentPage] = useState<'home' | 'faq'>(() => {
@@ -207,21 +208,35 @@ function App() {
         
       <header className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              setCurrentPage('home');
-            }}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-          >
-            <img src="/assets/twilight-logo.png" alt="Twilight Logo" style={{ minWidth: '108px', height: 'auto' }} />
-            <span className="text-base sm:text-xl font-semibold">ICO</span>
-          </a>
-          <nav className="flex items-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Hamburger menu button - visible on mobile/tablet */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+            
+            <div className="flex items-center gap-6 sm:gap-8 md:gap-12">
+            <a 
+              href="/" 
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage('home');
+              }}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              <img src="/assets/twilight-logo.png" alt="Twilight Logo" style={{ minWidth: '108px', height: 'auto' }} />
+              <span className="text-base sm:text-xl font-semibold">ICO</span>
+            </a>
             <div ref={navThemeToggleTilt} style={{ transformStyle: 'preserve-3d' }}>
               <ThemeToggle />
             </div>
+            </div>
+          </div>
+          <nav className="flex items-center gap-4 sm:gap-8">
+            {/* Desktop menu items */}
             <a 
               href="/faq" 
               ref={navLink1Tilt} 
@@ -229,12 +244,13 @@ function App() {
                 e.preventDefault();
                 setCurrentPage(currentPage === 'faq' ? 'home' : 'faq');
               }}
-              className={`hidden sm:block transition-colors text-sm sm:text-base ${currentPage === 'faq' ? themeClasses.textAccent : 'text-gray-300 hover:text-white'}`}
+              className={`hidden md:block transition-colors text-sm sm:text-base ${currentPage === 'faq' ? themeClasses.textAccent : 'text-gray-300 hover:text-white'}`}
               style={{ transformStyle: 'preserve-3d' }}
             >
               How to ICO
             </a>
-            <a href="#" ref={navLink2Tilt} className="hidden sm:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>Twilight Docs</a>
+            <a href="#" ref={navLink2Tilt} className="hidden md:block text-gray-300 hover:text-white transition-colors text-sm sm:text-base" style={{ transformStyle: 'preserve-3d' }}>Twilight Docs</a>
+            
             <button ref={navButtonTilt} className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border ${themeClasses.borderAccent} ${themeClasses.textAccent} rounded ${themeClasses.hoverBgAccent} ${themeClasses.textAccentHover} transition-colors text-sm sm:text-base`} style={{ transformStyle: 'preserve-3d' }}>
               <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Connect Wallet</span>
@@ -242,6 +258,32 @@ function App() {
             </button>
           </nav>
         </div>
+        
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-800 bg-gray-900">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-3">
+              <a 
+                href="/faq" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentPage(currentPage === 'faq' ? 'home' : 'faq');
+                  setMobileMenuOpen(false);
+                }}
+                className={`transition-colors text-sm ${currentPage === 'faq' ? themeClasses.textAccent : 'text-gray-300 hover:text-white'}`}
+              >
+                How to ICO
+              </a>
+              <a 
+                href="#" 
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Twilight Docs
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       <AnnouncementBanner state={auctionState} />
