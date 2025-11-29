@@ -17,7 +17,7 @@ export function AnnouncementBanner({ state }: AnnouncementBannerProps) {
   const messageWithSpacing = `${message}        •        `;
 
   return (
-    <div className={`${themeClasses.bgGradient} overflow-hidden py-2`}>
+    <div className={`relative ${themeClasses.bgGradient} overflow-hidden py-2 z-10`}>
       <div className="relative w-full">
         <div className="flex animate-marquee whitespace-nowrap">
           <span className={`text-sm sm:text-base ${themeClasses.textAccent} font-medium px-4 inline-block`}>

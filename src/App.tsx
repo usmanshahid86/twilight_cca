@@ -202,14 +202,14 @@ function App() {
 
   return (
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
-      {/* Lightning Background Container for Header and Hero */}
-      {currentPage === 'home' && (
-      <div className="relative">
-        {auctionState !== 'post-auction' && <LightningBackground />}
-      </div>
+      {/* Lightning Background - absolute positioned behind header/hero/summary */}
+      {currentPage === 'home' && auctionState !== 'post-auction' && (
+        <div className="absolute top-0 left-0 right-0 z-0" style={{ height: '100vh' }}>
+          <LightningBackground />
+        </div>
       )}
         
-      <header className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm`}>
+      <header className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm z-10`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Hamburger menu button - visible on mobile/tablet */}
@@ -231,7 +231,7 @@ function App() {
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <img src="/assets/twilight-logo.png" alt="Twilight Logo" style={{ minWidth: '108px', height: 'auto' }} />
-              <span className="text-base sm:text-xl font-semibold">ICO</span>
+              <span className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold whitespace-nowrap">Token Lightning Sale</span>
             </a>
             <div ref={navThemeToggleTilt} style={{ transformStyle: 'preserve-3d' }}>
               <ThemeToggle />
@@ -294,8 +294,7 @@ function App() {
       <AnnouncementBanner state={auctionState} />
 
       {currentPage === 'home' && (
-      <>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 z-10">
         <div className="mb-4 sm:mb-6 overflow-visible pt-0 relative z-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 overflow-visible pt-0">
             {/* Title Container */}
@@ -319,7 +318,7 @@ function App() {
                   titleComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
               >
-                Untraceable Bitcoin on a Privacy DEX
+                Untraceable Bitcoin on Privacy DEX
               </p>
             </div>
             <div className="flex-shrink-0 overflow-visible mt-4 sm:mt-6">
@@ -426,7 +425,6 @@ function App() {
           </AnimatedSection>
         </div>
       </div>
-      </>
       )}
       {/* End of Hero and Summary Section */}
 
