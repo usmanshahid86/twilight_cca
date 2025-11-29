@@ -13,7 +13,7 @@ import { AnnouncementBanner } from './components/AnnouncementBanner';
 import { StateSlider } from './components/StateSlider';
 import { TypewriterText } from './components/TypewriterText';
 import { ThemeToggle } from './components/ThemeToggle';
-import { LightningBackground } from './components/LightningBackground';
+import Lightning from './components/Lightning';
 import ElectricBorder from './components/ElectricBorder';
 import { useThemeClasses } from './hooks/useThemeClasses';
 import { useTilt } from './hooks/useTilt';
@@ -204,8 +204,14 @@ function App() {
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
       {/* Lightning Background - absolute positioned behind header/hero/summary */}
       {currentPage === 'home' && auctionState !== 'post-auction' && (
-        <div className="absolute top-0 left-0 right-0 z-0" style={{ height: '100vh' }}>
-          <LightningBackground />
+        <div className="absolute top-0 left-0 right-0 z-0 pointer-events-none" style={{ height: '100vh' }}>
+          <Lightning 
+            hue={186}
+            xOffset={0}
+            speed={0.5}
+            intensity={0.8}
+            size={1.2}
+          />
         </div>
       )}
         
