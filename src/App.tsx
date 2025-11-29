@@ -208,9 +208,9 @@ function App() {
           <Lightning 
             hue={186}
             xOffset={0}
-            speed={0.5}
-            intensity={0.8}
-            size={1.2}
+            speed={0.4}
+            intensity={0.5}
+            size={0.75}
           />
         </div>
       )}
