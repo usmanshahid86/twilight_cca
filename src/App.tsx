@@ -246,8 +246,8 @@ function App() {
 
       <AnnouncementBanner state={auctionState} />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
-        <div className="mb-8 sm:mb-12 overflow-visible pt-0 relative z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="mb-4 sm:mb-6 overflow-visible pt-0 relative z-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 overflow-visible pt-0">
             {/* Title Container */}
             <div className="text-center sm:text-left flex flex-col justify-center pt-0">
@@ -284,7 +284,7 @@ function App() {
         <div className={`transition-opacity duration-1000 ease-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>
           <AnimatedSection delay={100} animation="fade-in-up">
             {auctionState === 'pre-auction' ? (
-              <div className="flex justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <div className="flex justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div className="w-1/3">
                   <AnimatedSection delay={0}>
                     <TiltCard maxTilt={5} scale={1.02}>
@@ -319,7 +319,7 @@ function App() {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <AnimatedSection delay={0}>
                   <TiltCard maxTilt={3} scale={1.01}>
                     <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-6 cursor-pointer">
@@ -380,20 +380,20 @@ function App() {
       </div>
       {/* End of Lightning Background Container */}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-4">
         {currentPage === 'faq' ? (
           <FAQ />
         ) : (
           <>
         <div className={`transition-opacity duration-1000 ease-out ${showContent ? 'opacity-100' : 'opacity-0'}`}>
           <AnimatedSection delay={200} animation="fade-in-up">
-            <div className="flex items-center justify-center sm:justify-start mb-4 sm:mb-6">
+            <div className="flex items-center justify-center sm:justify-start mb-3 sm:mb-4">
               <StateSlider value={auctionState} onChange={setAuctionState} />
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={300} animation="fade-in-up">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 items-stretch">
           <AnimatedSection delay={0} animation="fade-in">
             <div className="flex flex-col h-full">
               {auctionState === 'post-auction' ? (
@@ -463,7 +463,7 @@ function App() {
             </div>
           </AnimatedSection>
           <AnimatedSection delay={150} animation="fade-in">
-            <div className="flex flex-col gap-4 sm:gap-6 h-full">
+            <div className="flex flex-col gap-3 sm:gap-4 h-full">
               {auctionState === 'auction-live' && (
                 <MyBid 
                   activeBids={myBidData}
@@ -484,7 +484,7 @@ function App() {
         )}
       </main>
 
-      <footer className="border-t border-gray-800 mt-8 sm:mt-12 py-4 sm:py-6 bg-black">
+      <footer className="border-t border-gray-800 mt-4 sm:mt-6 py-4 sm:py-6 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
             <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">© 2024 Twilight Protocol. All rights reserved.</p>
