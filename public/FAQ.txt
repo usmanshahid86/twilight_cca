@@ -4,17 +4,22 @@ What is a continuous clearing auction?
 
  It is an auction format where bids and asks are matched continuously, block by block, allowing real-time price discovery and gradual token distribution instead of discrete, single-round events.
 
-How does the auction work?
+What is the high-level flow of the auction?
 
- The auction runs over a defined period divided into blocks. Bids specify maximum price and quantity, and each new block recalculates a uniform clearing price where supply equals demand at that moment. Tokens allocated per block are sold at this clearing price, and bids fill only if their price limit meets or exceeds the clearing price.
+ The high level flow is as follows:
+    (1) Any during the live auction (time will be announced on the Twilight Token Lightning Sale website), you can fill out the maximum budget and price you are genuinely willing to pay and deposit the full amount (refundable) to our auction smart contract.
+    (2) At the end of each block a clearing price will be calculated for that block depending on the bidding demand. Folks who bid at or above the average price will get to purchase tokens at the same clearing price while others may get no allocation or partial fills.
+    (3) At the end of each block, anyone who did not get any fills will see their deposits refunded.
+    (4) You can add in as many bids as you like during any block as long as the bids are above the floor price for that block, and that the auction has not ended.
+    (5) At the end of the auction, a liquidity pool on Uniswap will be automatically created to allow people to trade their Twilight Token. 
 
 How is the clearing price for each block determined?
 
- At each block, the system aggregates all outstanding bids and available token supply for the block timeframe, finds the price where cumulative demand equals fixed supply, and sets that as the clearing price. All accepted bids pay this uniform clearing price.
+ At each block, the system aggregates all outstanding bids and available token supply for the block timeframe, finds the price where cumulative demand equals fixed supply, and sets that as the clearing price. All accepted bids pay this uniform clearing price. The end result is that everyone who bid above the average bid will receive full fill on the bids, while those who bid at the average price will at least get partial fill, and those who bid below the average price may not get any fill.
 
-How can bidders be sure to receive token allocation?
+What can I do to increase my chance of getting full allocation for the tokens?
 
- Bidders receive allocations proportional to their bid quantity at or above the clearing price of each block. Tokens are distributed throughout the auction incrementally. Specifying a competitive maximum price increases the chance of full or partial allocation.
+ The best and proven way to get allocation is to put in an honest bid for the maximum price you are willing to buy Twilight Tokens. Bidding lower than everyone else will likely result in getting no fills on your bids, while bidding higher than everyone else may result in paying more than you had to. You won't need to worry about buying at higher prices than others because everyone in the same batch buys at the same price, and bidders that come in in later blocks will not be able to buy at a lower price than yours.
 
 What is the Fully Diluted Value (FDV) of the token at the floor price?
 
@@ -22,7 +27,7 @@ What is the Fully Diluted Value (FDV) of the token at the floor price?
 
 Where can I participate or see the auction?
 
- The auction interface and full details are at https://twilight-token-auction.vercel.app/, allowing real-time bid submissions and updates as well as swapping of the token after the auction.
+ The auction interface and full details are at https://twilight-cca.vercel.app/, allowing real-time bid submissions and updates as well as swapping of the token after the auction.
 
 
 
@@ -52,7 +57,7 @@ How does Twilight ensure Bitcoin positions remain untraceable?
 
  Twilight uses rotating Bitcoin vaults (boomerang) and QuisQuis-based keys to shuffle addresses with every trade. Zero-knowledge proofs (zkOS + bulletproofs) verify transactions without revealing user data. This design keeps trade execution and PnL private even inside a decentralized exchange environment.
 
-Can I lend my Bitcoins on Twilight?
+Can I earn with my Bitcoins on Twilight?
 
  Yes, users who hold untraceable Bitcoin in the pool can lend them to earn trading fees. This creates a two-sided market where traders get private leverage and lenders receive yields in Bitcoin.
 
