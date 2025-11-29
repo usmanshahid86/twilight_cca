@@ -19,7 +19,7 @@ export function Swap({
   const tiltRef = useTilt({ maxTilt: 5, scale: 1.02 });
 
   return (
-    <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-lg p-4 sm:p-5 md:p-6 h-full" style={{ transformStyle: 'preserve-3d' }}>
+    <div ref={tiltRef} className="bg-gradient-to-br from-gray-900 to-gray-800 border rounded-lg p-4 sm:p-5 md:p-6 h-full" style={{ transformStyle: 'preserve-3d', borderColor: '#7df9ff', boxShadow: '0 0 10px rgba(125, 249, 255, 0.5), 0 0 20px rgba(125, 249, 255, 0.3)' }}>
       <div className="flex items-center gap-2 mb-4 sm:mb-6">
         <ArrowLeftRight className={`w-4 h-4 sm:w-5 sm:h-5 ${themeClasses.textAccent}`} />
         <h2 className="text-lg sm:text-xl font-semibold">Swap</h2>

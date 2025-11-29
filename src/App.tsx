@@ -203,7 +203,7 @@ function App() {
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
       {/* Lightning Background Container for Header and Hero */}
       <div className="relative">
-        <LightningBackground />
+        {auctionState !== 'post-auction' && <LightningBackground />}
         
       <header className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -419,7 +419,7 @@ function App() {
                       <ElectricBorder color="#7df9ff" speed={0.75} chaos={0.375} thickness={1.5} className="h-full" style={{ borderRadius: '16px' }}>
                         <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg p-6 h-full flex items-center justify-center">
                           <div className="text-center">
-                            <h2 className="text-xl sm:text-2xl font-semibold mb-4">Auction Starting Soon</h2>
+                            <h2 className="text-xl sm:text-2xl font-semibold mb-4">Auction Starts In</h2>
                             
                             {/* Countdown Timer */}
                             <div className="flex justify-center gap-2 sm:gap-4 mb-4">
