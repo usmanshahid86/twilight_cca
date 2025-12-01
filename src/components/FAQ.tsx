@@ -162,6 +162,7 @@ export function FAQ() {
       const textBefore = answer.substring(0, firstIndex).trim();
       
       // Extract text between each list item marker
+      let lastItemEndIndex = 0;
       for (let i = 0; i < parenMatches.length; i++) {
         const match = parenMatches[i];
         const startIndex = (match.index || 0) + match[0].length;
@@ -173,12 +174,11 @@ export function FAQ() {
         if (itemText) {
           listItems.push(itemText);
         }
+        lastItemEndIndex = endIndex;
       }
       
-      // Get text after the last list item
-      const lastMatch = parenMatches[parenMatches.length - 1];
-      const lastIndex = (lastMatch.index || 0) + lastMatch[0].length;
-      const textAfter = answer.substring(lastIndex).trim();
+      // Get text after the last list item (only if there's text beyond the last item's content)
+      const textAfter = answer.substring(lastItemEndIndex).trim();
       
       // Build parts array
       if (textBefore) {
@@ -220,6 +220,7 @@ export function FAQ() {
       const firstIndex = numberedMatches[0].index || 0;
       const textBefore = answer.substring(0, firstIndex).trim();
       
+      let lastItemEndIndex = 0;
       for (let i = 0; i < numberedMatches.length; i++) {
         const match = numberedMatches[i];
         const startIndex = (match.index || 0) + match[0].length;
@@ -231,11 +232,11 @@ export function FAQ() {
         if (itemText) {
           listItems.push(itemText);
         }
+        lastItemEndIndex = endIndex;
       }
       
-      const lastMatch = numberedMatches[numberedMatches.length - 1];
-      const lastIndex = (lastMatch.index || 0) + lastMatch[0].length;
-      const textAfter = answer.substring(lastIndex).trim();
+      // Get text after the last list item (only if there's text beyond the last item's content)
+      const textAfter = answer.substring(lastItemEndIndex).trim();
       
       if (textBefore) {
         parts.push(textBefore);

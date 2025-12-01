@@ -298,10 +298,10 @@ function App() {
         <div className="absolute top-0 left-0 right-0 z-0 pointer-events-none" style={{ height: '200vh' }}>
           <Lightning 
             hue={186}
-            xOffset={0}
-            speed={auctionState === 'post-auction' ? 0.2 : 0.4}
-            intensity={auctionState === 'post-auction' ? 0.25 : 0.5}
-            size={auctionState === 'post-auction' ? 0.375 : 0.75}
+            xOffset={0.75}
+            speed={auctionState === 'post-auction' ? 0.1 : 0.2}
+            intensity={0.15}
+            size={0.25}
           />
         </div>
       )}
@@ -365,7 +365,7 @@ function App() {
               }`}
               style={{ transformStyle: "preserve-3d" }}
             >
-              How to ICO
+              FAQ
             </a>
             <a
               href="https://quasar-8.gitbook.io/twilight-docs"
@@ -500,7 +500,7 @@ function App() {
                     : "text-gray-300 hover:text-white"
                 }`}
               >
-                How to ICO
+                FAQ
               </a>
               <a
                 href="https://quasar-8.gitbook.io/twilight-docs"
