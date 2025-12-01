@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure html and body fill viewport and prevent white space */
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #030712; /* gray-950 as fallback to prevent white space */
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
 /* Performance optimizations */
 * {
   -webkit-font-smoothing: antialiased;

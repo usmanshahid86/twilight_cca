@@ -295,7 +295,7 @@ function App() {
     <div className={`min-h-screen ${themeClasses.mainBackground} text-white`}>
       {/* Lightning Background - with transparency */}
       {currentPage === 'home' && (
-        <div className="absolute top-0 left-0 right-0 z-0 pointer-events-none" style={{ height: '200vh' }}>
+        <div className="absolute top-0 left-0 right-0 z-0 pointer-events-none" style={{ height: '100vh' }}>
           <Lightning 
             hue={186}
             xOffset={0.75}
