@@ -13,7 +13,7 @@ import { AnnouncementBanner } from './components/AnnouncementBanner';
 import { StateSlider } from './components/StateSlider';
 import { TypewriterText } from './components/TypewriterText';
 import { ThemeToggle } from './components/ThemeToggle';
-//import Lightning from './components/Lightning';
+import Lightning from './components/Lightning';
 import ElectricBorder from './components/ElectricBorder';
 import { useThemeClasses } from './hooks/useThemeClasses';
 import { useTilt } from './hooks/useTilt';
@@ -304,7 +304,7 @@ function App() {
             size={auctionState === 'post-auction' ? 0.375 : 0.75}
           />
         </div>
-      )*/}
+      )}
       <header
         className={`relative border-b border-gray-800 ${themeClasses.headerBackground} bg-opacity-80 backdrop-blur-sm z-10`}
       >
